@@ -13,11 +13,24 @@ class Language_RecognizerTests: XCTestCase {
 
     func test_initTakesTagScheme_andInstatiatesNLTagger() {
         
-        let tagScheme = NLTagScheme.lexicalClass
         let sut = makeSUT(tagScheme: .lexicalClass)
         
         XCTAssertNotNil(sut.tagger)
-        XCTAssertEqual(sut.tagger.tagSchemes, [tagScheme])
+        XCTAssertEqual(sut.tagger.tagSchemes, [.lexicalClass])
+        XCTAssertEqual(sut.scheme, .lexicalClass)
+    }
+    
+    func test_findVerbsInAString_assignsStringToTheTagger() {
+        
+        let sut = makeSUT(tagScheme: .lexicalClass)
+        
+        let testString = "I went running."
+        
+        sut.findVerbs(in: testString) { verbs in
+            XCTAssertEqual(verbs, ["running"])
+        }
+        
+        XCTAssertEqual(sut.tagger.string, testString)
     }
     
     // Helpers
