@@ -6,28 +6,25 @@
 //
 
 import XCTest
+import NaturalLanguage
 @testable import Language_Recognizer
 
 class Language_RecognizerTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    func test_initTakesTagScheme_andInstatiatesNLTagger() {
+        
+        let tagScheme = NLTagScheme.lexicalClass
+        let sut = makeSUT(tagScheme: .lexicalClass)
+        
+        XCTAssertNotNil(sut.tagger)
+        XCTAssertEqual(sut.tagger.tagSchemes, [tagScheme])
     }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    
+    // Helpers
+    
+    private func makeSUT(tagScheme: NLTagScheme) -> LanguageRecognizer {
+        let tagScheme = NLTagScheme(rawValue: tagScheme.rawValue)
+        return LanguageRecognizer(with: tagScheme)
     }
 
 }

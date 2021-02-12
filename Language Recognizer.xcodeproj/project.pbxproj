@@ -10,6 +10,7 @@
 		2231FA4725D7128A0094F300 /* Language_Recognizer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2231FA3D25D7128A0094F300 /* Language_Recognizer.framework */; };
 		2231FA4C25D7128A0094F300 /* Language_RecognizerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2231FA4B25D7128A0094F300 /* Language_RecognizerTests.swift */; };
 		2231FA4E25D7128A0094F300 /* Language_Recognizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 2231FA4025D7128A0094F300 /* Language_Recognizer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2231FA5A25D713390094F300 /* LanguageRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2231FA5925D713390094F300 /* LanguageRecognizer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +30,7 @@
 		2231FA4625D7128A0094F300 /* Language RecognizerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Language RecognizerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2231FA4B25D7128A0094F300 /* Language_RecognizerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language_RecognizerTests.swift; sourceTree = "<group>"; };
 		2231FA4D25D7128A0094F300 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2231FA5925D713390094F300 /* LanguageRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageRecognizer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				2231FA4B25D7128A0094F300 /* Language_RecognizerTests.swift */,
+				2231FA5925D713390094F300 /* LanguageRecognizer.swift */,
 				2231FA4D25D7128A0094F300 /* Info.plist */,
 			);
 			path = "Language RecognizerTests";
@@ -147,6 +150,7 @@
 				TargetAttributes = {
 					2231FA3C25D7128A0094F300 = {
 						CreatedOnToolsVersion = 12.4;
+						LastSwiftMigration = 1240;
 					};
 					2231FA4525D7128A0094F300 = {
 						CreatedOnToolsVersion = 12.4;
@@ -194,6 +198,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2231FA5A25D713390094F300 /* LanguageRecognizer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,6 +345,7 @@
 		2231FA5225D7128A0094F300 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
@@ -357,6 +363,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.timmikelj.doneSwiftUIiOS.Language-Recognizer";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -364,6 +371,7 @@
 		2231FA5325D7128A0094F300 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
@@ -388,6 +396,7 @@
 		2231FA5525D7128A0094F300 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 43HPDBHL29;
@@ -406,6 +415,7 @@
 		2231FA5625D7128A0094F300 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 43HPDBHL29;
