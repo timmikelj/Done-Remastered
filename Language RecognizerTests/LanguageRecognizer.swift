@@ -51,8 +51,8 @@ public class LanguageRecognizer {
     
     private func getVerb(from tag: NLTag?, range: Range<String.Index>) -> String? {
         
-        guard tag == .verb else { return nil }
-
-        return "running"
+        guard tag == .verb, let string = tagger.string else { return nil }
+        
+        return String(string[range]).lowercased()
     }
 }

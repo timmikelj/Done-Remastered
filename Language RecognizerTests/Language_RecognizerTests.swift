@@ -24,13 +24,23 @@ class Language_RecognizerTests: XCTestCase {
         
         let sut = makeSUT(tagScheme: .lexicalClass)
         
-        let testString = "I went running."
+        let testStrings: [String] = ["I went running.",
+                                     "Joined clubhouse",
+                                     "Just eating my dinner",
+                                     "Looking through the window while driving"]
         
-        sut.findVerbs(in: testString) { verbs in
-            XCTAssertEqual(verbs, ["running"])
+        let expectedVerbs = [["went"],
+                             ["joined"],
+                             ["eating"],
+                             ["looking", "driving"]]
+        
+        testStrings.enumerated().forEach { index, string in
+            sut.findVerbs(in: string) { verbs in
+                XCTAssertEqual(verbs, expectedVerbs[index])
+            }
+            
+            XCTAssertEqual(sut.tagger.string, string)
         }
-        
-        XCTAssertEqual(sut.tagger.string, testString)
     }
     
     // Helpers
@@ -39,5 +49,4 @@ class Language_RecognizerTests: XCTestCase {
         let tagScheme = NLTagScheme(rawValue: tagScheme.rawValue)
         return LanguageRecognizer(with: tagScheme)
     }
-
 }
