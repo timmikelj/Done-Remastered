@@ -75,6 +75,7 @@
 			children = (
 				2231FA4025D7128A0094F300 /* Language_Recognizer.h */,
 				2231FA4125D7128A0094F300 /* Info.plist */,
+				2231FA5925D713390094F300 /* LanguageRecognizer.swift */,
 			);
 			path = "Language Recognizer";
 			sourceTree = "<group>";
@@ -83,7 +84,6 @@
 			isa = PBXGroup;
 			children = (
 				2231FA4B25D7128A0094F300 /* Language_RecognizerTests.swift */,
-				2231FA5925D713390094F300 /* LanguageRecognizer.swift */,
 				2231FA4D25D7128A0094F300 /* Info.plist */,
 			);
 			path = "Language RecognizerTests";
