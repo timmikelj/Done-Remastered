@@ -20,7 +20,7 @@ class Language_RecognizerTests: XCTestCase {
         XCTAssertEqual(sut.scheme, .lexicalClass)
     }
     
-    func test_findVerbsInAString_assignsStringToTheTagger() {
+    func test_findVerbsInAString_assignsStringToTheTagger_andReturnsVerbsInClosure() {
         
         let sut = makeSUT(tagScheme: .lexicalClass)
         
@@ -40,6 +40,30 @@ class Language_RecognizerTests: XCTestCase {
                 XCTAssert(Thread.isMainThread)
             }
             
+            XCTAssertEqual(sut.tagger.string, string)
+        }
+    }
+    
+    func test_findNounsInAString_assignsStringToTheTagger_andReturnsVerbsInClosure() {
+
+        let sut = makeSUT(tagScheme: .lexicalClass)
+
+        let testStrings: [String] = ["I went running.",
+                                     "Joined clubhouse",
+                                     "Just EATING my dinner",
+                                     "Looking through the window while driVIng"]
+
+        let expectedNouns = [["running"],
+                             ["clubhouse"],
+                             ["dinner"],
+                             ["window"]]
+
+        testStrings.enumerated().forEach { index, string in
+            sut.findNouns(in: string) { verbs in
+                XCTAssertEqual(verbs, expectedNouns[index])
+                XCTAssert(Thread.isMainThread)
+            }
+
             XCTAssertEqual(sut.tagger.string, string)
         }
     }
