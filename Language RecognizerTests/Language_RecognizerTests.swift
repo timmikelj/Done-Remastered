@@ -26,7 +26,7 @@ class Language_RecognizerTests: XCTestCase {
     func test_returnErrorForEmptyString() {
         
         let sut = makeSUT()
-        sut.getNouns(from: "")
+        sut.findTags(withType: .verb, in: "")
             .sink { error in
                 switch error {
                 case .failure(let error):
@@ -55,7 +55,7 @@ class Language_RecognizerTests: XCTestCase {
                              ["looking", "driving"]]
         
         testStrings.enumerated().forEach { index, string in
-            sut.getVerbs(from: string)
+            sut.findTags(withType: .verb, in: string)
                 .collect()
                 .receive(on: DispatchQueue.main)
                 .sink { error in
@@ -86,7 +86,7 @@ class Language_RecognizerTests: XCTestCase {
 
         testStrings.enumerated().forEach { index, string in
             
-            sut.getNouns(from: string)
+            sut.findTags(withType: .noun, in: string)
                 .collect()
                 .receive(on: DispatchQueue.main)
                 .sink { error in

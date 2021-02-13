@@ -24,15 +24,7 @@ public class LanguageRecognizer {
     
     public typealias WordPublisher = AnyPublisher<String, Error>
     
-    public func getVerbs(from string: String) -> WordPublisher {
-        findTag(.verb, in: string)
-    }
-    
-    public func getNouns(from string: String) -> WordPublisher {
-        findTag(.noun, in: string)
-    }
-    
-    private func findTag(_ tag: NLTag, in string: String) -> WordPublisher {
+    public func findTags(withType tag: NLTag, in string: String) -> WordPublisher {
         
         guard !string.isEmpty else {
             return Fail(error: .emptyString).eraseToAnyPublisher()
