@@ -26,8 +26,8 @@ class Language_RecognizerTests: XCTestCase {
         
         let testStrings: [String] = ["I went running.",
                                      "Joined clubhouse",
-                                     "Just eating my dinner",
-                                     "Looking through the window while driving"]
+                                     "Just EATING my dinner",
+                                     "Looking through the window while driVIng"]
         
         let expectedVerbs = [["went"],
                              ["joined"],
