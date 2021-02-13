@@ -17,15 +17,16 @@ public class LanguageRecognizer {
         tagger = NLTagger(tagSchemes: [tagScheme])
     }
     
-    public func findVerbs(in string: String, completion: ([String]) -> Void) {
-        
-        tagger.string = string
+    public func findVerbs(in string: String, completion: @escaping ([String]) -> Void) {
         
         var verbs = [String]()
         
+        tagger.string = string
         enumerateVerbs(acc: &verbs)
         
-        completion(verbs)
+        DispatchQueue.main.async {
+            completion(verbs)
+        }
     }
     
     private func enumerateVerbs(acc: inout [String]) {
@@ -41,11 +42,11 @@ public class LanguageRecognizer {
                              options: .omitPunctuation) { tag, range -> Bool in
             
             if let verb = getVerb(from: tag, range: range) {
-
                 acc.append(verb)
+                return true
             }
-                
-            return true
+            
+            return false
         }
     }
     

@@ -37,6 +37,7 @@ class Language_RecognizerTests: XCTestCase {
         testStrings.enumerated().forEach { index, string in
             sut.findVerbs(in: string) { verbs in
                 XCTAssertEqual(verbs, expectedVerbs[index])
+                XCTAssert(Thread.isMainThread)
             }
             
             XCTAssertEqual(sut.tagger.string, string)
