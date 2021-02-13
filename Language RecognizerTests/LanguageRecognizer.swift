@@ -22,7 +22,7 @@ public class LanguageRecognizer {
         var verbs = [String]()
         
         tagger.string = string
-        enumerateVerbs(acc: &verbs)
+        enumerateTags(acc: &verbs, desiredTag: .verb)
         
         completion(verbs)
     }
@@ -32,12 +32,12 @@ public class LanguageRecognizer {
         var nouns = [String]()
         
         tagger.string = string
-        enumerateNouns(acc: &nouns)
+        enumerateTags(acc: &nouns, desiredTag: .noun)
         
         completion(nouns)
     }
     
-    private func enumerateVerbs(acc: inout [String]) {
+    private func enumerateTags(acc: inout [String], desiredTag: NLTag) {
         
         guard let string = tagger.string,
               let stringRange = string.range(of: string) else {
@@ -49,7 +49,7 @@ public class LanguageRecognizer {
                              scheme: scheme,
                              options: .omitPunctuation) { tag, range -> Bool in
             
-            if let verb = getVerb(from: tag, range: range) {
+            if let verb = getString(from: tag, for: desiredTag, range: range) {
                 acc.append(verb)
             }
             
@@ -57,36 +57,9 @@ public class LanguageRecognizer {
         }
     }
     
-    private func enumerateNouns(acc: inout [String]) {
+    private func getString(from tag: NLTag?, for desiredTag: NLTag, range: Range<String.Index>) -> String? {
         
-        guard let string = tagger.string,
-              let stringRange = string.range(of: string) else {
-            return
-        }
-        
-        tagger.enumerateTags(in: stringRange,
-                             unit: .word,
-                             scheme: scheme,
-                             options: .omitPunctuation) { tag, range -> Bool in
-            
-            if let noun = getNoun(from: tag, range: range) {
-                acc.append(noun)
-            }
-            
-            return true
-        }
-    }
-    
-    private func getVerb(from tag: NLTag?, range: Range<String.Index>) -> String? {
-        
-        guard tag == .verb, let string = tagger.string else { return nil }
-        
-        return String(string[range]).lowercased()
-    }
-    
-    private func getNoun(from tag: NLTag?, range: Range<String.Index>) -> String? {
-        
-        guard tag == .noun, let string = tagger.string else { return nil }
+        guard tag == desiredTag, let string = tagger.string else { return nil }
         
         return String(string[range]).lowercased()
     }
