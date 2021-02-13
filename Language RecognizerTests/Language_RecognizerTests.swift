@@ -11,6 +11,8 @@ import Combine
 @testable import Language_Recognizer
 
 class Language_RecognizerTests: XCTestCase {
+    
+    private var cancellables: Set<AnyCancellable> = []
 
     func test_initTakesTagScheme_andInstatiatesNLTagger() {
         
@@ -21,10 +23,26 @@ class Language_RecognizerTests: XCTestCase {
         XCTAssertEqual(sut.scheme, .lexicalClass)
     }
     
+    func test_returnErrorForEmptyString() {
+        
+        let sut = makeSUT()
+        sut.getNouns(from: "")
+            .sink { error in
+                switch error {
+                case .failure(let error):
+                    XCTAssertEqual(error, .emptyString)
+                case .finished:
+                    XCTFail("finished instead of returning an error")
+                }
+            } receiveValue: { noun in
+                XCTFail("expected to fail with error got \(noun) instead")
+            }
+            .store(in: &cancellables)
+    }
+    
     func test_findVerbsInAString_assignsStringToTheTagger_andReturnsVerbsInClosure() {
         
         let sut = makeSUT()
-        var cancellables: Set<AnyCancellable> = []
         
         let testStrings: [String] = ["I went running.",
                                      "Joined clubhouse",
@@ -55,7 +73,6 @@ class Language_RecognizerTests: XCTestCase {
     func test_findNounsInAString_assignsStringToTheTagger_andReturnsVerbsInClosure() {
 
         let sut = makeSUT()
-        var cancellables: Set<AnyCancellable> = []
 
         let testStrings: [String] = ["I went running.",
                                      "Joined clubhouse",
