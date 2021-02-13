@@ -6,8 +6,13 @@
 //
 
 import NaturalLanguage
+import Combine
 
 public class LanguageRecognizer {
+    
+    public enum Error: Swift.Error {
+        case emptyString
+    }
     
     private(set) var scheme: NLTagScheme
     private(set) var tagger: NLTagger
@@ -17,47 +22,53 @@ public class LanguageRecognizer {
         tagger = NLTagger(tagSchemes: [scheme])
     }
     
-    public func findVerbs(in string: String, completion: @escaping ([String]) -> Void) {
-        
-        var verbs = [String]()
-        
-        tagger.string = string
-        enumerateTags(acc: &verbs, desiredTag: .verb)
-        
-        completion(verbs)
+    public typealias WordPublisher = AnyPublisher<String, Error>
+    
+    public func getVerbs(from string: String) -> WordPublisher {
+        findTag(.verb, in: string)
     }
     
-    public func findNouns(in string: String, completion: @escaping ([String]) -> Void) {
-        
-        var nouns = [String]()
-        
-        tagger.string = string
-        enumerateTags(acc: &nouns, desiredTag: .noun)
-        
-        completion(nouns)
+    public func getNouns(from string: String) -> WordPublisher {
+        findTag(.noun, in: string)
     }
     
-    private func enumerateTags(acc: inout [String], desiredTag: NLTag) {
+    private func findTag(_ tag: NLTag, in string: String) -> WordPublisher {
         
-        guard let string = tagger.string,
-              let stringRange = string.range(of: string) else {
-            return
+        guard !string.isEmpty else {
+            return Fail(error: .emptyString).eraseToAnyPublisher()
         }
         
-        tagger.enumerateTags(in: stringRange,
-                             unit: .word,
-                             scheme: scheme,
-                             options: .omitPunctuation) { tag, range -> Bool in
-            
-            if let verb = getString(from: tag, for: desiredTag, range: range) {
-                acc.append(verb)
+        tagger.string = string
+        
+        return enumerateTags(desiredTag: tag)
+    }
+    
+    private func enumerateTags(desiredTag: NLTag) -> WordPublisher {
+        Future<String, Error> { [weak self] promise in
+            guard let self = self,
+                  let string = self.tagger.string,
+                  let stringRange = string.range(of: string) else {
+                return
             }
             
-            return true
+            self.tagger.enumerateTags(in: stringRange,
+                                 unit: .word,
+                                 scheme: self.scheme,
+                                 options: .omitPunctuation) { tag, range -> Bool in
+                
+                if let verb = self.getString(from: tag, for: desiredTag, range: range) {
+                    promise(.success(verb))
+                }
+                
+                return true
+            }
         }
+        .eraseToAnyPublisher()
     }
     
-    private func getString(from tag: NLTag?, for desiredTag: NLTag, range: Range<String.Index>) -> String? {
+    private func getString(from tag: NLTag?,
+                           for desiredTag: NLTag,
+                           range: Range<String.Index>) -> String? {
         
         guard tag == desiredTag, let string = tagger.string else { return nil }
         

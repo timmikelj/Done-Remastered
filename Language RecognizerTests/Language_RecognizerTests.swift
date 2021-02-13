@@ -7,6 +7,7 @@
 
 import XCTest
 import NaturalLanguage
+import Combine
 @testable import Language_Recognizer
 
 class Language_RecognizerTests: XCTestCase {
@@ -23,6 +24,7 @@ class Language_RecognizerTests: XCTestCase {
     func test_findVerbsInAString_assignsStringToTheTagger_andReturnsVerbsInClosure() {
         
         let sut = makeSUT()
+        var cancellables: Set<AnyCancellable> = []
         
         let testStrings: [String] = ["I went running.",
                                      "Joined clubhouse",
@@ -35,11 +37,17 @@ class Language_RecognizerTests: XCTestCase {
                              ["looking", "driving"]]
         
         testStrings.enumerated().forEach { index, string in
-            sut.findVerbs(in: string) { verbs in
-                XCTAssertEqual(verbs, expectedVerbs[index])
-                XCTAssert(Thread.isMainThread)
-            }
-            
+            sut.getVerbs(from: string)
+                .collect()
+                .receive(on: DispatchQueue.main)
+                .sink { error in
+                    XCTFail("failed with error \(error)")
+                } receiveValue: { verbs in
+                    XCTAssertEqual(verbs, expectedVerbs[index])
+                    XCTAssert(Thread.isMainThread)
+                }
+                .store(in: &cancellables)
+
             XCTAssertEqual(sut.tagger.string, string)
         }
     }
@@ -47,6 +55,7 @@ class Language_RecognizerTests: XCTestCase {
     func test_findNounsInAString_assignsStringToTheTagger_andReturnsVerbsInClosure() {
 
         let sut = makeSUT()
+        var cancellables: Set<AnyCancellable> = []
 
         let testStrings: [String] = ["I went running.",
                                      "Joined clubhouse",
@@ -59,10 +68,17 @@ class Language_RecognizerTests: XCTestCase {
                              ["window"]]
 
         testStrings.enumerated().forEach { index, string in
-            sut.findNouns(in: string) { verbs in
-                XCTAssertEqual(verbs, expectedNouns[index])
-                XCTAssert(Thread.isMainThread)
-            }
+            
+            sut.getNouns(from: string)
+                .collect()
+                .receive(on: DispatchQueue.main)
+                .sink { error in
+                    XCTFail("failed with error \(error)")
+                } receiveValue: { verbs in
+                    XCTAssertEqual(verbs, expectedNouns[index])
+                    XCTAssert(Thread.isMainThread)
+                }
+                .store(in: &cancellables)
 
             XCTAssertEqual(sut.tagger.string, string)
         }
