@@ -12,9 +12,9 @@ public class LanguageRecognizer {
     private(set) var scheme: NLTagScheme
     private(set) var tagger: NLTagger
     
-    public init(with tagScheme: NLTagScheme) {
-        scheme = tagScheme
-        tagger = NLTagger(tagSchemes: [tagScheme])
+    public init() {
+        scheme = .lexicalClass
+        tagger = NLTagger(tagSchemes: [scheme])
     }
     
     public func findVerbs(in string: String, completion: @escaping ([String]) -> Void) {

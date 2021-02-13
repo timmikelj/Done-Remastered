@@ -13,7 +13,7 @@ class Language_RecognizerTests: XCTestCase {
 
     func test_initTakesTagScheme_andInstatiatesNLTagger() {
         
-        let sut = makeSUT(tagScheme: .lexicalClass)
+        let sut = makeSUT()
         
         XCTAssertNotNil(sut.tagger)
         XCTAssertEqual(sut.tagger.tagSchemes, [.lexicalClass])
@@ -22,7 +22,7 @@ class Language_RecognizerTests: XCTestCase {
     
     func test_findVerbsInAString_assignsStringToTheTagger_andReturnsVerbsInClosure() {
         
-        let sut = makeSUT(tagScheme: .lexicalClass)
+        let sut = makeSUT()
         
         let testStrings: [String] = ["I went running.",
                                      "Joined clubhouse",
@@ -46,7 +46,7 @@ class Language_RecognizerTests: XCTestCase {
     
     func test_findNounsInAString_assignsStringToTheTagger_andReturnsVerbsInClosure() {
 
-        let sut = makeSUT(tagScheme: .lexicalClass)
+        let sut = makeSUT()
 
         let testStrings: [String] = ["I went running.",
                                      "Joined clubhouse",
@@ -70,8 +70,7 @@ class Language_RecognizerTests: XCTestCase {
     
     // Helpers
     
-    private func makeSUT(tagScheme: NLTagScheme) -> LanguageRecognizer {
-        let tagScheme = NLTagScheme(rawValue: tagScheme.rawValue)
-        return LanguageRecognizer(with: tagScheme)
+    private func makeSUT() -> LanguageRecognizer {
+        return LanguageRecognizer()
     }
 }
