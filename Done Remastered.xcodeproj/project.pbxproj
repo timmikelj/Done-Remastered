@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2211259D25ED89D600ABDEF0 /* LanguageRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2211259C25ED89D600ABDEF0 /* LanguageRecognizer.swift */; };
 		221125A125ED8A2800ABDEF0 /* TagType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221125A025ED8A2800ABDEF0 /* TagType.swift */; };
+		221125A925ED8DCF00ABDEF0 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221125A825ED8DCF00ABDEF0 /* Error.swift */; };
 		2231FA4725D7128A0094F300 /* Language_Recognizer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2231FA3D25D7128A0094F300 /* Language_Recognizer.framework */; };
 		2231FA4C25D7128A0094F300 /* NaturalLanguageRecognizerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2231FA4B25D7128A0094F300 /* NaturalLanguageRecognizerTests.swift */; };
 		2231FA5A25D713390094F300 /* NaturalLanguageRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2231FA5925D713390094F300 /* NaturalLanguageRecognizer.swift */; };
@@ -27,6 +28,7 @@
 /* Begin PBXFileReference section */
 		2211259C25ED89D600ABDEF0 /* LanguageRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageRecognizer.swift; sourceTree = "<group>"; };
 		221125A025ED8A2800ABDEF0 /* TagType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagType.swift; sourceTree = "<group>"; };
+		221125A825ED8DCF00ABDEF0 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		2231FA3D25D7128A0094F300 /* Language_Recognizer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Language_Recognizer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2231FA4125D7128A0094F300 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2231FA4625D7128A0094F300 /* Language Recognizer Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Language Recognizer Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,6 +89,7 @@
 				2231FA5925D713390094F300 /* NaturalLanguageRecognizer.swift */,
 				2211259C25ED89D600ABDEF0 /* LanguageRecognizer.swift */,
 				221125A025ED8A2800ABDEF0 /* TagType.swift */,
+				221125A825ED8DCF00ABDEF0 /* Error.swift */,
 			);
 			path = "Language Recognizer";
 			sourceTree = "<group>";
@@ -208,6 +211,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				221125A925ED8DCF00ABDEF0 /* Error.swift in Sources */,
 				221125A125ED8A2800ABDEF0 /* TagType.swift in Sources */,
 				2231FA5A25D713390094F300 /* NaturalLanguageRecognizer.swift in Sources */,
 				2211259D25ED89D600ABDEF0 /* LanguageRecognizer.swift in Sources */,

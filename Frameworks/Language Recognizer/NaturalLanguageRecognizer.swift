@@ -8,11 +8,7 @@
 import NaturalLanguage
 import Combine
 
-public class NaturalLanguageRecognizer {
-    
-    public enum Error: Swift.Error {
-        case emptyString
-    }
+public class NaturalLanguageRecognizer: LanguageRecognizer {
     
     private(set) var scheme: NLTagScheme
     private(set) var tagger: NLTagger
@@ -21,10 +17,8 @@ public class NaturalLanguageRecognizer {
         scheme = .lexicalClass
         tagger = NLTagger(tagSchemes: [scheme])
     }
-    
-    public typealias WordPublisher = AnyPublisher<String, Error>
-    
-    public func findTags(withType tag: NLTag, in string: String) -> WordPublisher {
+
+    public func findTags(withType tag: TagType, in string: String) -> AnyPublisher<String, Error> {
         
         guard !string.isEmpty else {
             return Fail(error: .emptyString).eraseToAnyPublisher()
@@ -32,13 +26,22 @@ public class NaturalLanguageRecognizer {
         
         tagger.string = string
         
-        return tagsPublisher(desiredTag: tag)
+        return tagsPublisher(desiredTag: mapTagType(tag))
     }
 }
 
 private extension NaturalLanguageRecognizer {
     
-    func tagsPublisher(desiredTag: NLTag) -> WordPublisher {
+    func mapTagType(_ tagType: TagType) -> NLTag {
+        switch tagType {
+        case .noun:
+            return .noun
+        case .verb:
+            return .verb
+        }
+    }
+    
+    func tagsPublisher(desiredTag: NLTag) -> AnyPublisher<String, Error> {
         Future<String, Error> { [unowned self] promise in
             guard let string = self.tagger.string,
                   let stringRange = string.range(of: string) else {
