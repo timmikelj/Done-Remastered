@@ -32,23 +32,25 @@ public class NaturalLanguageRecognizer {
         
         tagger.string = string
         
-        return enumerateTags(desiredTag: tag)
+        return tagsPublisher(desiredTag: tag)
     }
+}
+
+private extension NaturalLanguageRecognizer {
     
-    private func enumerateTags(desiredTag: NLTag) -> WordPublisher {
-        Future<String, Error> { [weak self] promise in
-            guard let self = self,
-                  let string = self.tagger.string,
+    func tagsPublisher(desiredTag: NLTag) -> WordPublisher {
+        Future<String, Error> { [unowned self] promise in
+            guard let string = self.tagger.string,
                   let stringRange = string.range(of: string) else {
                 return
             }
             
-            self.tagger.enumerateTags(in: stringRange,
+            tagger.enumerateTags(in: stringRange,
                                  unit: .word,
-                                 scheme: self.scheme,
+                                 scheme: scheme,
                                  options: .omitPunctuation) { tag, range -> Bool in
                 
-                if let verb = self.getString(from: tag, for: desiredTag, range: range) {
+                if let verb = getString(from: tag, for: desiredTag, range: range) {
                     promise(.success(verb))
                 }
                 
@@ -58,9 +60,9 @@ public class NaturalLanguageRecognizer {
         .eraseToAnyPublisher()
     }
     
-    private func getString(from tag: NLTag?,
-                           for desiredTag: NLTag,
-                           range: Range<String.Index>) -> String? {
+    func getString(from tag: NLTag?,
+                   for desiredTag: NLTag,
+                   range: Range<String.Index>) -> String? {
         
         guard tag == desiredTag, let string = tagger.string else { return nil }
         
