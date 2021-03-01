@@ -10,7 +10,7 @@ import NaturalLanguage
 import Combine
 @testable import Language_Recognizer
 
-class Language_RecognizerTests: XCTestCase {
+class NaturalLanguageRecognizerTests: XCTestCase {
     
     private var cancellables: Set<AnyCancellable> = []
 
