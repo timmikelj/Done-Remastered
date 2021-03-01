@@ -1,5 +1,5 @@
 //
-//  LanguageRecognizer.swift
+//  NaturalLanguageRecognizer.swift
 //  Language Recognizer
 //
 //  Created by Tim Mikelj on 12/02/2021.
@@ -8,7 +8,7 @@
 import NaturalLanguage
 import Combine
 
-public class LanguageRecognizer {
+public class NaturalLanguageRecognizer {
     
     public enum Error: Swift.Error {
         case emptyString

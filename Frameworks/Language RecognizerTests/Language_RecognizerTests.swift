@@ -103,7 +103,7 @@ class Language_RecognizerTests: XCTestCase {
     
     // Helpers
     
-    private func makeSUT() -> LanguageRecognizer {
-        return LanguageRecognizer()
+    private func makeSUT() -> NaturalLanguageRecognizer {
+        return NaturalLanguageRecognizer()
     }
 }
