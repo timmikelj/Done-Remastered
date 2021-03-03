@@ -14,7 +14,7 @@ class NaturalLanguageRecognizerTests: XCTestCase {
     
     private var cancellables: Set<AnyCancellable> = []
 
-    func test_initTakesTagScheme_andInstatiatesNLTagger() {
+    func test_init_instatiatesNLTagger_andSetsUpScheme() {
         
         let sut = makeSUT()
         
@@ -23,7 +23,7 @@ class NaturalLanguageRecognizerTests: XCTestCase {
         XCTAssertEqual(sut.scheme, .lexicalClass)
     }
     
-    func test_returnErrorForEmptyString() {
+    func test_emitErrorForEmptyString() {
         
         let sut = makeSUT()
         sut.findTags(withType: .verb, in: "")
@@ -40,7 +40,7 @@ class NaturalLanguageRecognizerTests: XCTestCase {
             .store(in: &cancellables)
     }
     
-    func test_findVerbsInAString_assignsStringToTheTagger_andReturnsVerbsInClosure() {
+    func test_findVerbsInAString_assignsStringToTheTagger_andEmitVerbsInClosure() {
         
         let sut = makeSUT()
         
@@ -70,7 +70,7 @@ class NaturalLanguageRecognizerTests: XCTestCase {
         }
     }
     
-    func test_findNounsInAString_assignsStringToTheTagger_andReturnsVerbsInClosure() {
+    func test_findNounsInAString_assignsStringToTheTagger_andEmitsNounsInClosure() {
 
         let sut = makeSUT()
 
