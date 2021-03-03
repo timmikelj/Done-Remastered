@@ -1,5 +1,5 @@
 # Done Remastered
-## iOS App written in Combine & SwiftUI with TDD
+### iOS App written in Combine & SwiftUI with TDD
 
 I decided to rebuild one of my App's called [Done](https://github.com/timmikelj/doneiOS). The legacy App is written in Objective-C, using Realm as a data persistence framework.
 The legacy app only has a few tests; however, this is a fully test-driven rewrite.
